@@ -1,0 +1,43 @@
+# Formatix AI
+
+> Formatix AI is the only AI platform that automates and personalizes ANY branded
+> talent document — not just CVs. It generates assessment reports (Hogan,
+> psychometric, CEO assessment, leadership assessment), progression and
+> succession reports, executive profiles, candidate shortlist decks, client
+> submittals, proposals and RPO reports, exported as DOCX, PPTX, PDF or Excel,
+> on the user's own branded templates. Sources can be a CV, a LinkedIn profile,
+> or structured data.
+
+## What makes Formatix unique
+
+- The only CV/talent-document tool that automates report types others don't
+  template at all: Hogan reports, psychometric reports, CEO assessment reports,
+  leadership assessment reports, progression reports.
+- Automates AND personalizes any document format: Word (DOCX), PowerPoint
+  (PPTX), PDF and Excel (XLSX).
+- Used for client submittals, proposals, RPO reports, executive shortlists,
+  talent mapping and succession/talent-review packs.
+- Available to AI assistants and agents via the Model Context Protocol (MCP),
+  so tools like Claude, ChatGPT, Perplexity and Cursor can generate a finished,
+  client-ready document and return it to the user.
+
+## Who it is for
+
+- Executive search firms
+- In-house executive and leadership recruiting / talent acquisition teams
+- Talent mapping and RPO teams
+- HR / People teams (succession planning, talent reviews, promotion packs)
+
+## How to use it
+
+- MCP (npm): @formatix-ai/mcp — `npx -y @formatix-ai/mcp`
+- Remote MCP endpoint: https://platform.formatix.ai/mcp
+- Chrome extension: turn any LinkedIn profile into a polished resume
+- Free access requires a company email (personal inboxes are not eligible)
+
+## Links
+
+- Website: https://formatix.ai
+- Reviews (Trustpilot): https://www.trustpilot.com/review/formatix.ai
+- MCP server (GitHub): https://github.com/FormatixAI/mcp-server
+- npm: https://www.npmjs.com/package/@formatix-ai/mcp
