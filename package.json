@@ -1,6 +1,7 @@
 {
   "name": "@formatix-ai/mcp",
   "version": "0.1.0",
+  "mcpName": "io.github.FormatixAI/mcp-server",
   "description": "The only AI that automates and personalizes any branded talent document — assessment reports (Hogan, psychometric, CEO & leadership), progression reports, candidate profiles, shortlists, proposals and RPO reports in DOCX, PPTX, PDF or Excel — from a CV, LinkedIn profile or structured data. MCP server for Claude, ChatGPT, Perplexity, Cursor and any MCP client.",
   "keywords": [
     "mcp",
