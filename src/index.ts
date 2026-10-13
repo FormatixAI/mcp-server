@@ -9,7 +9,7 @@
  *
  * This is a thin client for the Formatix API (https://platform.formatix.ai).
  * It contains no application logic and no credentials: the user supplies their
- * own key via FORMATIX_API_KEY, or requests a free one with `claim_access`.
+ * own key via FORMATIX_API_KEY, created in their Formatix account.
  */
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
@@ -26,12 +26,12 @@ const SIGNUP_URL = "https://formatix.ai";
 
 const NO_KEY_HINT =
   "No Formatix API key is configured for this connection.\n\n" +
-  "To get FREE access right now, call the `claim_access` tool with your COMPANY email " +
-  "(personal inboxes such as gmail.com / outlook.com / yahoo.com are not eligible). " +
-  "A free API key will be issued.\n\n" +
-  "Alternatively, set FORMATIX_API_KEY in your MCP configuration, or sign up at " +
-  SIGNUP_URL +
-  ".";
+  "Using Formatix from an AI assistant needs a Formatix account on a paid plan or an active trial:\n" +
+  "1. Create a Formatix account at " + SIGNUP_URL + ". New accounts get 10 free trial credits " +
+  "(no card, valid for 14 days); after that, choose a paid plan.\n" +
+  "2. Create an API key in Settings.\n" +
+  "3. Set it as FORMATIX_API_KEY in your MCP configuration and restart the client.\n\n" +
+  "Documents generated here use your account's credits.";
 
 function text(s: string) {
   return { content: [{ type: "text" as const, text: s }] };
@@ -73,7 +73,7 @@ function requireKey(): string | null {
 
 const server = new McpServer({
   name: "formatix",
-  version: "0.1.0",
+  version: "0.1.2",
 });
 
 // List the document types available to the account.
@@ -167,6 +167,10 @@ server.tool(
       }),
     });
     if (r.status === 401) return text(NO_KEY_HINT);
+    if (r.status === 402)
+      return errText(
+        `Out of credits. ${r.json?.message || ""} You have ${r.json?.available ?? "0"} and need ${r.json?.required ?? "1"}. Upgrade: ${r.json?.upgrade_url || SIGNUP_URL}`.trim()
+      );
     if (!r.ok) return errText(`Could not format the LinkedIn profile (HTTP ${r.status}). ${detail(r)}`.trim());
     const id = r.json?.record_id;
     return text(`Profile queued (record_id: ${id}). Poll \`check_status\` with record_id ${id} until ready.`);
@@ -192,39 +196,6 @@ server.tool(
       return text(`Status: ${status}\nReady to download: ${r.json.download_url}\nShare this link with the client.`);
     }
     return text(`Status: ${status}. Keep polling \`check_status\` until it reads "Formatted".`);
-  }
-);
-
-// Issue a free API key for company-email users.
-server.tool(
-  "claim_access",
-  "Get FREE Formatix access using your COMPANY email. Personal inboxes (gmail, outlook, yahoo, proton, etc.) are not eligible. Returns a free API key — treat it as a secret: store it as FORMATIX_API_KEY in your MCP config rather than leaving it in chat history.",
-  {
-    company_email: z.string().email().describe("Your work/company email address. Personal inboxes are rejected."),
-  },
-  async ({ company_email }) => {
-    const r = await apiFetch("/api/v1/claim/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: company_email }),
-    });
-    if (r.status === 404)
-      return text(
-        `Free self-serve access isn't enabled on this endpoint yet. Sign up (company email) at ${SIGNUP_URL} and create an API key in Settings, then set FORMATIX_API_KEY.`
-      );
-    if (r.status === 422 || r.status === 400)
-      return text(
-        `That email wasn't accepted${r.json?.message ? `: ${r.json.message}` : " — please use your company email (personal inboxes are not eligible)."}`
-      );
-    if (r.status === 429)
-      return text("Too many requests right now — please wait a minute and try again.");
-    if (!r.ok) return errText(`Could not claim access (HTTP ${r.status}). ${detail(r)}`.trim());
-    const key = r.json?.api_key || r.json?.key;
-    if (key)
-      return text(
-        `Free access granted. Store this as FORMATIX_API_KEY in your MCP config (keep it secret):\n\n${key}\n\nThen call \`list_document_types\` to begin. ${r.json?.message || ""}`.trim()
-      );
-    return text(`Request received. ${r.json?.message || "Check your inbox to activate your free Formatix access."}`);
   }
 );
 

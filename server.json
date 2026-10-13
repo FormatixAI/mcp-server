@@ -7,21 +7,21 @@
     "url": "https://github.com/FormatixAI/mcp-server",
     "source": "github"
   },
-  "version": "0.1.1",
+  "version": "0.1.2",
   "packages": [
     {
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "@formatix-ai/mcp",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "transport": {
         "type": "stdio"
       },
       "environmentVariables": [
         {
           "name": "FORMATIX_API_KEY",
-          "description": "Your Formatix API key (fxi_...). Get a free one with the claim_access tool using a company email.",
-          "isRequired": false,
+          "description": "Your Formatix API key (fxi_...). Create a Formatix account (paid plan or 14-day trial) and make a key in Settings.",
+          "isRequired": true,
           "isSecret": true
         }
       ]

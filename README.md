@@ -46,14 +46,13 @@ Every document is generated from your own branded template — fonts, colours, l
 
 ## Quick start
 
-### Get a free API key (company email)
+### You need a Formatix account
 
-Free access requires a **company email** — personal inboxes (gmail, outlook, yahoo, proton…) are not eligible.
+Using Formatix from ChatGPT, Claude, Perplexity or any MCP client needs a **Formatix account on a paid plan or an active trial**. Documents you generate through MCP use your account's credits, the same as on the platform.
 
-- In any connected AI client, just ask it to **"claim free Formatix access with my email <you@yourcompany.com>"** — the `claim_access` tool issues a key instantly, **or**
-- Sign up at **https://formatix.ai** and create a key in **Settings → API keys**.
-
-Set the key as `FORMATIX_API_KEY` in the configs below.
+1. Create an account at **https://formatix.ai**. New accounts get **10 free trial credits** (no card, valid for 14 days), usable from MCP during the trial; after that, choose a paid plan.
+2. Create an API key in **Settings → API keys**.
+3. Set the key as `FORMATIX_API_KEY` in the configs below.
 
 ### Claude Desktop / Claude Code
 
@@ -109,7 +108,6 @@ Authenticate with your Formatix account (OAuth) or paste your `fxi_` API key whe
 | `generate_document` | The hero. Any source text → any branded document in DOCX/PPTX/PDF/XLSX. Returns a `record_id`. |
 | `format_from_linkedin` | LinkedIn profile text → polished resume / candidate profile. |
 | `check_status` | Poll a `record_id`; returns the download link when the document is ready. |
-| `claim_access` | Get a free API key with your company email. |
 
 ### Typical agent flow
 
@@ -127,7 +125,7 @@ check_status(record_id)                        → "Formatted" + download_url
 
 | Env var | Default | Purpose |
 | --- | --- | --- |
-| `FORMATIX_API_KEY` | _(none)_ | Your `fxi_` key. Without it, only `claim_access` works. |
+| `FORMATIX_API_KEY` | _(none)_ | Your `fxi_` key from your Formatix account (Settings → API keys). Required: without it, every tool returns setup instructions. |
 | `FORMATIX_API_BASE` | `https://platform.formatix.ai` | Override for testing against another environment. |
 
 ## How it works

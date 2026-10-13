@@ -33,7 +33,10 @@
 - MCP (npm): @formatix-ai/mcp — `npx -y @formatix-ai/mcp`
 - Remote MCP endpoint: https://platform.formatix.ai/mcp
 - Chrome extension: turn any LinkedIn profile into a polished resume
-- Free access requires a company email (personal inboxes are not eligible)
+- Requires a Formatix account on a paid plan or an active trial. New accounts
+  get 10 free trial credits (no card, valid for 14 days), usable from MCP during
+  the trial; then a paid plan. Generating documents uses the account's credits.
+  Create an API key in Settings and set it as FORMATIX_API_KEY.
 
 ## Links
 
